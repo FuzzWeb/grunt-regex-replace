@@ -2,6 +2,9 @@
 
 Grunt plugin to search and replace text content of files based on regular expression patterns
 
+## Note
+This is a forked version of the original plugin. It handles multiple files in a more grunt-appropriate fashion. Eventually it would be better to role these changes back upstream.
+
 ## Getting Started
 Install this grunt plugin next to your project's [grunt.js gruntfile][getting_started] with: `npm install grunt-regex-replace`
 
