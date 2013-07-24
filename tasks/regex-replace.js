@@ -16,8 +16,7 @@ module.exports = function(grunt) {
   // TASKS
   // ==========================================================================
   grunt.registerMultiTask('regex-replace', 'find & replace content of a file based regex patterns', function(){
-    var files = grunt.file.expand(this.files[0].src),
-      actions = this.data.actions,
+    var actions = this.data.actions,
       arrString = "[object Array]",
       regexString = "[object RegExp]",
       toString = Object.prototype.toString,
@@ -26,9 +25,12 @@ module.exports = function(grunt) {
       srchAction = null,
       rplAction = null,
       updatedContent;
-      for(var i = 0; i< files.length; i++){
+
+    this.files.forEach(function(file) {
+      this.src.forEach(function(filepath) {
+
         if(toString.call(actions) === arrString){
-          updatedContent = grunt.file.read(files[i]);
+          updatedContent = grunt.file.read(filepath);
           for(var j = 0; j < actions.length; j++){
             srchAction = actions[j].search,
             rplAction = actions[j].replace; 
@@ -47,13 +49,16 @@ module.exports = function(grunt) {
             }
             updatedContent = regexReplace( updatedContent, srchAction, rplAction , options, j, actions[j].name);
           }
-          grunt.file.write(files[i], updatedContent);
+          grunt.file.write(file.dest, updatedContent);
           if(this.errorCount){
             return false;
           } 
-          grunt.log.writeln('File \'' + files[i] + '\' replace complete.');
+          grunt.log.writeln('File \'' + filepath + '\' replace complete.');
         }
-      }
+
+      });
+    });
+
   });
   // ==========================================================================
   // HELPERS
