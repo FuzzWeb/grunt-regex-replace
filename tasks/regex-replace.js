@@ -27,7 +27,7 @@ module.exports = function(grunt) {
       updatedContent;
 
     this.files.forEach(function(file) {
-      this.src.forEach(function(filepath) {
+      file.src.forEach(function(filepath) {
 
         if(toString.call(actions) === arrString){
           updatedContent = grunt.file.read(filepath);
@@ -50,7 +50,7 @@ module.exports = function(grunt) {
             updatedContent = regexReplace( updatedContent, srchAction, rplAction , options, j, actions[j].name);
           }
           grunt.file.write(file.dest, updatedContent);
-          if(this.errorCount){
+          if(file.errorCount){
             return false;
           } 
           grunt.log.writeln('File \'' + filepath + '\' replace complete.');
